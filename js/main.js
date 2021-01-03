@@ -27,7 +27,8 @@ function pauseVideo() {
 
 function initControl() {
     pause.style.display = 'none';
-
+    volMid.style.display = 'none';
+    volMin.style.display = 'none';
 
     empty.addEventListener('click', function() {
         if(video.paused) {
@@ -94,4 +95,6 @@ function initControl() {
         //Der innere Teil der soundline wird automatisch aktualisiert
         video.currentTime = targetTime;
     });
+
+    vol
 }

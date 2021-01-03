@@ -1,6 +1,7 @@
 //Erstellt ein Format, dass einen Integer dazu zwingt 2 Stellen zu haben.
 var sekformat   = new Intl.NumberFormat('de', {minimumIntegerDigits: "2"});
 
+var body        = document.querySelector('body');
 var play        = document.getElementById('play');
 var pause       = document.getElementById('pause');
 var preload     = document.getElementById('preload');
@@ -19,7 +20,43 @@ var progBar     = document.getElementById('progress-bar');
 var progBarWrap = document.getElementById('progbar-wrapper');
 var currentTime = document.getElementById('current');
 var duration    = document.getElementById('duration');
+var expand      = document.getElementById('expand');
+var compress    = document.getElementById('compress');
+var pip         = document.getElementById('pip');
+const pipAvail  = document.pictureInPictureEnabled || !video.disablePictureInPicture;
 var timer;
+
+function openFullscreen() {
+    if (body.requestFullscreen) {
+      body.requestFullscreen();
+    } else if (body.webkitRequestFullscreen) {  //Safari
+      body.webkitRequestFullscreen();
+    } else if (body.msRequestFullscreen) {      //Internet Explorer
+      body.msRequestFullscreen();
+    }
+}
+
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { //Safari
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {     //Internet Explorer
+      document.msExitFullscreen();
+    }
+}
+
+function picInPic() {
+    try {
+        if (!document.pictureInPictureElement) {
+            video.requestPictureInPicture();
+        } else {
+            document.exitPictureInPicture();
+        }
+    } catch(reason) {
+        console.error(reason);
+    }
+}
 
 function playVideo() {
     document.getElementById('video').play();
@@ -39,6 +76,8 @@ function initControl() {
     pause.style.display = 'none';
     volMid.style.display = 'none';
     volMin.style.display = 'none';
+    compress.style.display = 'none';
+    pipAvail ? pip.style.display = 'inline' : pip.style.display = 'none';
 
     overlay.addEventListener('mousemove', function() {
         overlay.style.opacity = 1;
@@ -63,6 +102,22 @@ function initControl() {
 
     pause.addEventListener('click', function() {
         pauseVideo();
+    });
+
+    expand.addEventListener('click', function() {
+        openFullscreen();
+        expand.style.display = 'none';
+        compress.style.display = 'inline';
+    });
+
+    compress.addEventListener('click', function() {
+        exitFullscreen();
+        expand.style.display = 'inline';
+        compress.style.display = 'none';
+    });
+
+    pip.addEventListener('click', function() {
+        picInPic();
     });
 
     video.addEventListener('progress', function() {

@@ -94,6 +94,18 @@ video {
   top: 0px;
   left: 30px;
 }
+#control-bar #screening {
+  display: inline-block;
+  position: absolute;
+  width: 17.5px;
+  height: 100%;
+  right: 0px;
+  top: 0px;
+}
+#control-bar #screening #pip {
+  position: relative;
+  left: -30px;
+}
 #progbar-wrapper {
   position: fixed;
   bottom: 40px;

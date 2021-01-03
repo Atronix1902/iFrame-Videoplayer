@@ -10,6 +10,7 @@ var volMin = document.getElementById('volume-min');
 var volMid = document.getElementById('volume-mid');
 var volMax = document.getElementById('volume-max');
 var progBar = document.getElementById('progress-bar'); 
+var progBarWrap = document.getElementById('progbar-wrapper');
 
 function playVideo() {
     document.getElementById('video').play();
@@ -54,12 +55,10 @@ function initControl() {
     });
 
     video.addEventListener('timeupdate', function() {
-        if(video.played.length>0) {
-            played.style.width = 100 * video.currentTime / video.duration + "%";
-        }    
+        played.style.width = 100 * video.currentTime / video.duration + "%";
     });
 
-    progBar.addEventListener('mousemove', function(event) {
+    progBarWrap.addEventListener('mousemove', function(event) {
         //Setzt die aktuelle Zeit beim anklicken und bewegen innerhalb des Zeitstrahls
         if (event.buttons == 1) { //Prüft ob eine Maustaste gedrückt ist
             //Erfasst die gesamte Breite des .soundline-inner Elements und dann die Mausposition relativ zu dem Element
@@ -79,7 +78,7 @@ function initControl() {
         }
     });
 
-    progBar.addEventListener('click', function(event) {
+    progBarWrap.addEventListener('click', function(event) {
         //Erfasst die gesamte Breite des .soundline-inner Elements und dann die Mausposition relativ zu dem Element
         let width = progBar.clientWidth;
         let mousePos = event.offsetX;
@@ -95,6 +94,4 @@ function initControl() {
         //Der innere Teil der soundline wird automatisch aktualisiert
         video.currentTime = targetTime;
     });
-
-    vol
 }

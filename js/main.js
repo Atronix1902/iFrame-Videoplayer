@@ -1,19 +1,25 @@
-var play = document.getElementById('play');
-var pause = document.getElementById('pause');
-var preload = document.getElementById('preload');
-var played = document.getElementById('played');
-var video = document.getElementById('video');
-var overlay =  document.getElementById('overlay');
-var empty = document.getElementById('empty');
-var volume = document.getElementById('volume');
-var volBar = document.getElementById('volume-bar');
+//Erstellt ein Format, dass einen Integer dazu zwingt 2 Stellen zu haben.
+var sekformat   = new Intl.NumberFormat('de', {minimumIntegerDigits: "2"});
+
+var play        = document.getElementById('play');
+var pause       = document.getElementById('pause');
+var preload     = document.getElementById('preload');
+var played      = document.getElementById('played');
+var video       = document.getElementById('video');
+var overlay     = document.getElementById('overlay');
+var empty       = document.getElementById('empty');
+var volume      = document.getElementById('volume');
+var volBar      = document.getElementById('volume-bar');
 var volBarInner = document.getElementById('volbar-inner');
-var volBarWrap = document.getElementById('volbar-wrapper');
-var volMin = document.getElementById('volume-min');
-var volMid = document.getElementById('volume-mid');
-var volMax = document.getElementById('volume-max');
-var progBar = document.getElementById('progress-bar'); 
+var volBarWrap  = document.getElementById('volbar-wrapper');
+var volMin      = document.getElementById('volume-min');
+var volMid      = document.getElementById('volume-mid');
+var volMax      = document.getElementById('volume-max');
+var progBar     = document.getElementById('progress-bar'); 
 var progBarWrap = document.getElementById('progbar-wrapper');
+var currentTime = document.getElementById('current');
+var duration    = document.getElementById('duration');
+var timer;
 
 function playVideo() {
     document.getElementById('video').play();
@@ -33,6 +39,14 @@ function initControl() {
     pause.style.display = 'none';
     volMid.style.display = 'none';
     volMin.style.display = 'none';
+
+    overlay.addEventListener('mousemove', function() {
+        overlay.style.opacity = 1;
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            overlay.style.opacity = 0;
+        }, 5000);
+    });
 
     empty.addEventListener('click', function() {
         if(video.paused) {
@@ -59,6 +73,12 @@ function initControl() {
 
     video.addEventListener('timeupdate', function() {
         played.style.width = 100 * video.currentTime / video.duration + "%";
+        currentTime.innerText = Math.floor(video.currentTime/60) + ":" + sekformat.format(Math.floor(video.currentTime%60));;
+    });
+
+    video.addEventListener('loadedmetadata', function() {
+        currentTime.innerText = Math.floor(video.currentTime/60) + ":" + sekformat.format(Math.floor(video.currentTime%60));;
+        duration.innerText = Math.floor(video.duration/60) + ":" + sekformat.format(Math.floor(video.duration%60));
     });
 
     video.addEventListener('volumechange', function() {
@@ -89,8 +109,8 @@ function initControl() {
             let factor = mousePos / width;
 
             //errechnet den neuen Wet des currentTime Attributs
-            let duration = video.duration;
-            let targetTime = duration*factor;
+            let vidDuration = video.duration;
+            let targetTime = vidDuration*factor;
 
             //Setzt die neue currentTime
             //Der innere Teil der soundline wird automatisch aktualisiert
@@ -107,8 +127,8 @@ function initControl() {
         let factor = mousePos / width;
 
         //errechnet den neuen Wet des currentTime Attributs
-        let duration = video.duration;
-        let targetTime = duration*factor;
+        let vidDuration = video.duration;
+        let targetTime = vidDuration*factor;
 
         //Setzt die neue currentTime
         //Der innere Teil der soundline wird automatisch aktualisiert
@@ -116,7 +136,7 @@ function initControl() {
     });
 
     volBarWrap.addEventListener('mousemove', function(event) {
-        //Setzt die aktuelle Zeit beim anklicken und bewegen innerhalb des Zeitstrahls
+        //Setzt die aktuelle Lautstärke beim anklicken und bewegen innerhalb des Lautstärkestrahls
         if (event.buttons == 1) { //Prüft ob eine Maustaste gedrückt ist
             //Erfasst die gesamte Breite des volBarWrap Elements und dann die Mausposition relativ zu dem Element
             let width = volBarWrap.clientWidth;

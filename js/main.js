@@ -136,6 +136,11 @@ function initControl() {
         duration.innerText = Math.floor(video.duration/60) + ":" + sekformat.format(Math.floor(video.duration%60));
     });
 
+    video.addEventListener('ended', function() {
+        play.style.display = 'inline';
+        pause.style.display = 'none';
+    });
+
     video.addEventListener('volumechange', function() {
         volBarInner.style.width = 100 * video.volume + "%";
         if (video.muted || video.volume <= 0) {

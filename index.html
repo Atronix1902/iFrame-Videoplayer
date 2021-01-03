@@ -27,28 +27,33 @@
             <div id="empty"></div>
             <div id="control-bar">
                 <div id="play-pause">
-                    <i id="play" class="fas fa-play"></i>
-                    <i id="pause" class="fas fa-pause"></i>
+                    <i id="play" class="fas fa-play clickable"></i>
+                    <i id="pause" class="fas fa-pause clickable"></i>
                 </div>
                 <div id="volume">
-                    <i id="volume-max" class="fas fa-volume-up"></i>
-                    <i id="volume-mid" class="fas fa-volume-down"></i>
-                    <i id="volume-min" class="fas fa-volume-mute"></i>
-                    <div id="volbar-wrapper">
+                    <i id="volume-max" class="fas fa-volume-up clickable"></i>
+                    <i id="volume-mid" class="fas fa-volume-down clickable"></i>
+                    <i id="volume-min" class="fas fa-volume-mute clickable"></i>
+                    <div id="volbar-wrapper" class="clickable">
                         <div id="volume-bar">
                             <div id="volbar-inner"></div>
                         </div>
                     </div>
                 </div>
+                <div id="time">
+                    <span id="current">0:00</span>
+                    /
+                    <span id="duration">0:00</span>
+                </div>
             </div>
-            <div id="progbar-wrapper">
+            <div id="progbar-wrapper" class="clickable">
                 <div id="progress-bar">
                     <div id="preload"></div>
                     <div id="played"></div>
                 </div>
             </div>
         </div>
-        <video preload="none" id="video" type="video/mp4"></video>
+        <video preload="metadata" id="video" type="video/mp4"></video>
         <script src="./js/main.js"></script>
         <script>
             let e = document.getElementById('video');

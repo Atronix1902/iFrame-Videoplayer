@@ -5,6 +5,11 @@ var played = document.getElementById('played');
 var video = document.getElementById('video');
 var overlay =  document.getElementById('overlay');
 var empty = document.getElementById('empty');
+var volume = document.getElementById('volume');
+var volMin = document.getElementById('volume-min');
+var volMid = document.getElementById('volume-mid');
+var volMax = document.getElementById('volume-max');
+var progBar = document.getElementById('progress-bar'); 
 
 function playVideo() {
     document.getElementById('video').play();
@@ -22,6 +27,7 @@ function pauseVideo() {
 
 function initControl() {
     pause.style.display = 'none';
+
 
     empty.addEventListener('click', function() {
         if(video.paused) {
@@ -50,5 +56,42 @@ function initControl() {
         if(video.played.length>0) {
             played.style.width = 100 * video.played.end(0) / video.duration + "%";
         }    
+    });
+
+    progBar.addEventListener('mousemove', function(event) {
+        //Setzt die aktuelle Zeit beim anklicken und bewegen innerhalb des Zeitstrahls
+        if (event.buttons == 1) { //Prüft ob eine Maustaste gedrückt ist
+            //Erfasst die gesamte Breite des .soundline-inner Elements und dann die Mausposition relativ zu dem Element
+            let width = progBar.clientWidth;
+            let mousePos = event.offsetX;
+
+            //errechnet den Faktor der die Position des Cursors repräsentiert
+            let factor = mousePos / width;
+
+            //errechnet den neuen Wet des currentTime Attributs
+            let duration = video.duration;
+            let targetTime = duration*factor;
+
+            //Setzt die neue currentTime
+            //Der innere Teil der soundline wird automatisch aktualisiert
+            video.currentTime = targetTime;
+        }
+    });
+
+    progBar.addEventListener('click', function(event) {
+        //Erfasst die gesamte Breite des .soundline-inner Elements und dann die Mausposition relativ zu dem Element
+        let width = progBar.clientWidth;
+        let mousePos = event.offsetX;
+
+        //errechnet den Faktor der die Position des Cursors repräsentiert
+        let factor = mousePos / width;
+
+        //errechnet den neuen Wet des currentTime Attributs
+        let duration = video.duration;
+        let targetTime = duration*factor;
+
+        //Setzt die neue currentTime
+        //Der innere Teil der soundline wird automatisch aktualisiert
+        video.currentTime = targetTime;
     });
 }

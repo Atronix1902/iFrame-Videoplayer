@@ -54,7 +54,7 @@ function initControl() {
 
     video.addEventListener('timeupdate', function() {
         if(video.played.length>0) {
-            played.style.width = 100 * video.played.end(0) / video.duration + "%";
+            played.style.width = 100 * video.currentTime / video.duration + "%";
         }    
     });
 

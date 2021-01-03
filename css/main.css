@@ -71,10 +71,19 @@ video {
   top: calc(50% - 2px);
   width: 100px;
   height: 4px;
-  background-color: white;
-  z-index: 2;
+  background-color: rgba(124, 124, 124, 0.5);
   border: 0px solid black;
   border-radius: 10px;
+  overflow: hidden;
+}
+#control-bar #volume #volbar-wrapper #volume-bar #volbar-inner {
+  position: absolute;
+  display: inline-block;
+  left: 0px;
+  top: 0px;
+  background-color: white;
+  height: 100%;
+  width: 100%;
 }
 #progbar-wrapper {
   position: fixed;

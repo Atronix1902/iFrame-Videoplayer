@@ -75,10 +75,10 @@ function initControl() {
 
     empty.addEventListener('click', function() {
         if(video.paused) {
-            playVideo();
+            video.play();
         }
         else {
-            pauseVideo();
+            video.pause();
         }
     });
 

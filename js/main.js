@@ -58,20 +58,6 @@ function picInPic() {
     }
 }
 
-function playVideo() {
-    document.getElementById('video').play();
-    console.log("Play");
-    play.style.display = 'none';
-    pause.style.display = 'inline';
-}
-
-function pauseVideo() {
-    document.getElementById('video').pause();
-    console.log("Pause");
-    play.style.display = 'inline';
-    pause.style.display = 'none';
-}
-
 function initControl() {
     pause.style.display = 'none';
     volMid.style.display = 'none';
@@ -97,11 +83,11 @@ function initControl() {
     });
 
     play.addEventListener('click', function() {
-        playVideo();
+        video.play();
     });
 
     pause.addEventListener('click', function() {
-        pauseVideo();
+        video.pause();
     });
 
     expand.addEventListener('click', function() {
@@ -118,6 +104,18 @@ function initControl() {
 
     pip.addEventListener('click', function() {
         picInPic();
+    });
+
+    video.addEventListener('pause', function() {
+        play.style.display = 'inline';
+        pause.style.display = 'none';
+        console.log("Pause");
+    });
+
+    video.addEventListener('play', function() {
+        play.style.display = 'none';
+        pause.style.display = 'inline';
+        console.log("Play");
     });
 
     video.addEventListener('progress', function() {

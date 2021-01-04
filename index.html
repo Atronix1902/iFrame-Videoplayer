@@ -19,6 +19,7 @@
         <script>
             const myParams = new URLSearchParams(window.location.search);
             const src = myParams.get('src');
+            const dl = myParams.get('dl') != null ? myParams.get('dl') : false;
         </script>
     </head>
     
@@ -46,9 +47,12 @@
                     <span id="duration">0:00</span>
                 </div>
                 <div id="screening">
-                    <i id="expand" class="fas fa-expand" class="clickable"></i>
-                    <i id="compress" class="fas fa-compress" class="clickable"></i>
-                    <i id="pip" class="fas fa-compress-arrows-alt" class="clickable"></i>
+                    <i id="expand" class="fas fa-expand clickable"></i>
+                    <i id="compress" class="fas fa-compress clickable"></i>
+                    <i id="pip" class="fas fa-compress-arrows-alt clickable"></i>
+                </div>
+                <div id="util">
+                    <a id="download" download href=""><i class="fas fa-download clickable"></i></a>
                 </div>
             </div>
             <div id="progbar-wrapper" class="clickable">
@@ -58,18 +62,25 @@
                 </div>
             </div>
         </div>
-        <video preload="metadata" id="video" type="video/mp4"></video>
+        <video preload="metadata" id="video" type="video/mp4" crossorigin="anonymous"></video>
         <script src="./js/main.js"></script>
         <script>
             let e = document.getElementById('video');
+            let dlButton = document.getElementById('download');
+            dlButton.style.display = 'none';
             if(src != null) {
-                e.src = "./media/"+src;
+                e.src = src.replaceAll('../', './');
             }
             else {
                 e.src = "./media/test.mp4";
             }
+            if(dl) {
+                dlButton.style.display ='inline';
+                dlButton.setAttribute('href', e.src);
+            }
             initControl();
             e.load();
+            video.play();
         </script>
     </body>
 </html>

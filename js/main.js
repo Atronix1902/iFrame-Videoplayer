@@ -90,6 +90,17 @@ function initControl(type) {
         video.pause();
     });
 
+    volIcons.addEventListener('click', function() {
+        if(video.muted) {
+            video.muted = false;
+            console.log("Unmuted Video");
+        }
+        else {
+            video.muted = true;
+            console.log("Muted Video");
+        }
+    });
+
     expand.addEventListener('click', function() {
         openFullscreen();
         expand.style.display = 'none';

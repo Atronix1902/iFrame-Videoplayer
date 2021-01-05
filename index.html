@@ -15,12 +15,13 @@
         <link href="./css/fontawesome/fontawesome.css" type="text/css" rel="stylesheet">
         <link href="./css/fontawesome/all.css" type="text/css" rel="stylesheet">
         <link href="./css/fontawesome/v4-shims.css" type="text/css" rel="stylesheet">
+        
         <title>Mediaplayer</title>
         <script>
             const myParams = new URLSearchParams(window.location.search);
             const src = myParams.get('src');
             const dl = myParams.get('dl') != null ? myParams.get('dl') : false;
-            const type = myParams.get('t') != null ? myParams.get('t') : 'main';
+            const type = myParams.get('t') != null ? myParams.get('t') : '1';
             document.getElementById('style').setAttribute('href', './css/' + type + '.css');
         </script>
     </head>

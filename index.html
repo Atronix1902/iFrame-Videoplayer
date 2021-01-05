@@ -8,7 +8,7 @@
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Expires" content="10">
         
-        <link rel="stylesheet" type="text/css" href="./css/main.css"></link>
+        <link id="style" rel="stylesheet" type="text/css" href="./css/main.css"></link>
         <link rel="icon" type="image/jpeg" href="./media/icon.png">
         
         <!-- FontAwesome for icons -->
@@ -20,6 +20,8 @@
             const myParams = new URLSearchParams(window.location.search);
             const src = myParams.get('src');
             const dl = myParams.get('dl') != null ? myParams.get('dl') : false;
+            const type = myParams.get('t') != null ? myParams.get('t') : 'main';
+            document.getElementById('style').setAttribute('href', './css/' + type + '.css');
         </script>
     </head>
     

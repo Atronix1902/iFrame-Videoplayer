@@ -10,6 +10,7 @@ var video       = document.getElementById('video');
 var overlay     = document.getElementById('overlay');
 var empty       = document.getElementById('empty');
 var volume      = document.getElementById('volume');
+var volIcons    = document.getElementById('volicons');
 var volBar      = document.getElementById('volume-bar');
 var volBarInner = document.getElementById('volbar-inner');
 var volBarWrap  = document.getElementById('volbar-wrapper');
@@ -131,26 +132,22 @@ function initControl(type) {
 
     video.addEventListener('progress', function() {
         if(video.buffered.length>0) {
-            switch(type) {        
-                default:
-                    preload.style.width = 100 * video.buffered.end(0) / video.duration + "%";
-                    break;
-                case 2:
-                    preload.style.height = 100 * video.buffered.end(0) / video.duration + "%";
-                    break;
+            if(type == 2) {
+                preload.style.height = 100 * video.buffered.end(0) / video.duration + "%";
+            }
+            else {
+                preload.style.width = 100 * video.buffered.end(0) / video.duration + "%";
             }
             console.log('Preload: ' + 100 * video.buffered.end(0) / video.duration + "%");
         }
     });
 
     video.addEventListener('timeupdate', function() {
-        switch(type) {        
-            default:
-                played.style.width = 100 * video.currentTime / video.duration + "%";
-                break;
-            case 2:
-                played.style.height = 100 * video.currentTime / video.duration + "%";
-                break;
+        if(type == 2) {
+            played.style.height = 100 * video.currentTime / video.duration + "%";
+        }
+        else {
+            played.style.width = 100 * video.currentTime / video.duration + "%";
         }
         currentTime.innerText = Math.floor(video.currentTime/60) + ":" + sekformat.format(Math.floor(video.currentTime%60));;
     });
@@ -166,13 +163,11 @@ function initControl(type) {
     });
 
     video.addEventListener('volumechange', function() {
-        switch(type) {        
-            default:
-                volBarInner.style.width = 100 * video.volume + "%";
-                break;
-            case 2:
-                volBarInner.style.height = 100 * video.volume + "%";
-                break;
+        if(type == 2) {    
+            volBarInner.style.height = 100 * video.volume + "%";
+        }
+        else {
+            volBarInner.style.width = 100 * video.volume + "%";
         }
         
         if (video.muted || video.volume <= 0) {
@@ -192,7 +187,62 @@ function initControl(type) {
 
     progBarWrap.addEventListener('mousemove', function(event) {
         //Setzt die aktuelle Zeit beim anklicken und bewegen innerhalb des Zeitstrahls
-        if (event.buttons == 1) { //Prüft ob eine Maustaste gedrückt ist
+        if(type == 2) {
+            if (event.buttons == 1) { //Prüft ob eine Maustaste gedrückt ist
+                //Erfasst die gesamte Breite des progBarWrap Elements und dann die Mausposition relativ zu dem Element
+                let height = progBarWrap.clientHeight;
+                let mousePos = event.offsetY;
+
+                //errechnet den Faktor der die Position des Cursors repräsentiert
+                let factor = mousePos / height;
+
+                //errechnet den neuen Wet des currentTime Attributs
+                let vidDuration = video.duration;
+                let targetTime = vidDuration* (1-factor);
+
+                //Setzt die neue currentTime
+                //Der innere Teil der soundline wird automatisch aktualisiert
+                video.currentTime = targetTime;
+            }
+        }
+        else {
+            if (event.buttons == 1) { //Prüft ob eine Maustaste gedrückt ist
+                //Erfasst die gesamte Breite des progBarWrap Elements und dann die Mausposition relativ zu dem Element
+                let width = progBarWrap.clientWidth;
+                let mousePos = event.offsetX;
+
+                //errechnet den Faktor der die Position des Cursors repräsentiert
+                let factor = mousePos / width;
+
+                //errechnet den neuen Wet des currentTime Attributs
+                let vidDuration = video.duration;
+                let targetTime = vidDuration*factor;
+
+                //Setzt die neue currentTime
+                //Der innere Teil der soundline wird automatisch aktualisiert
+                video.currentTime = targetTime;
+            }
+        }
+    });
+
+    progBarWrap.addEventListener('click', function(event) {
+        if(type == 2) {
+            //Erfasst die gesamte Breite des progBarWrap Elements und dann die Mausposition relativ zu dem Element
+            let height = progBarWrap.clientHeight;
+            let mousePos = event.offsetY;
+
+            //errechnet den Faktor der die Position des Cursors repräsentiert
+            let factor = mousePos / height;
+
+            //errechnet den neuen Wet des currentTime Attributs
+            let vidDuration = video.duration;
+            let targetTime = vidDuration* (1-factor);
+
+            //Setzt die neue currentTime
+            //Der innere Teil der soundline wird automatisch aktualisiert
+            video.currentTime = targetTime;
+        }
+        else {
             //Erfasst die gesamte Breite des progBarWrap Elements und dann die Mausposition relativ zu dem Element
             let width = progBarWrap.clientWidth;
             let mousePos = event.offsetX;
@@ -210,26 +260,52 @@ function initControl(type) {
         }
     });
 
-    progBarWrap.addEventListener('click', function(event) {
-        //Erfasst die gesamte Breite des progBarWrap Elements und dann die Mausposition relativ zu dem Element
-        let width = progBarWrap.clientWidth;
-        let mousePos = event.offsetX;
-
-        //errechnet den Faktor der die Position des Cursors repräsentiert
-        let factor = mousePos / width;
-
-        //errechnet den neuen Wet des currentTime Attributs
-        let vidDuration = video.duration;
-        let targetTime = vidDuration*factor;
-
-        //Setzt die neue currentTime
-        //Der innere Teil der soundline wird automatisch aktualisiert
-        video.currentTime = targetTime;
-    });
-
     volBarWrap.addEventListener('mousemove', function(event) {
         //Setzt die aktuelle Lautstärke beim anklicken und bewegen innerhalb des Lautstärkestrahls
-        if (event.buttons == 1) { //Prüft ob eine Maustaste gedrückt ist
+        if(type == 2) {
+            if (event.buttons == 1) { //Prüft ob eine Maustaste gedrückt ist
+                //Erfasst die gesamte Breite des volBarWrap Elements und dann die Mausposition relativ zu dem Element
+                let height = volBarWrap.clientHeight;
+                let mousePos = event.offsetY;
+
+                //errechnet den Faktor der die Position des Cursors repräsentiert
+                let factor = mousePos / height;
+
+                //Setzt die neue Volume
+                //Der innere Teil der soundline wird automatisch aktualisiert
+                video.volume = 1-factor;
+            }
+        }
+        else {
+            if (event.buttons == 1) { //Prüft ob eine Maustaste gedrückt ist
+                //Erfasst die gesamte Breite des volBarWrap Elements und dann die Mausposition relativ zu dem Element
+                let width = volBarWrap.clientWidth;
+                let mousePos = event.offsetX;
+
+                //errechnet den Faktor der die Position des Cursors repräsentiert
+                let factor = mousePos / width;
+
+                //Setzt die neue Volume
+                //Der innere Teil der soundline wird automatisch aktualisiert
+                video.volume = factor;
+            }
+        }
+    });
+
+    volBarWrap.addEventListener('click', function(event) {
+        if(type == 2) {
+            //Erfasst die gesamte Breite des volBarWrap Elements und dann die Mausposition relativ zu dem Element
+            let height = volBarWrap.clientHeight;
+            let mousePos = event.offsetY;
+
+            //errechnet den Faktor der die Position des Cursors repräsentiert
+            let factor = mousePos / height;
+
+            //Setzt die neue Volume
+            //Der innere Teil der soundline wird automatisch aktualisiert
+            video.volume = 1-factor;
+        }    
+        else {
             //Erfasst die gesamte Breite des volBarWrap Elements und dann die Mausposition relativ zu dem Element
             let width = volBarWrap.clientWidth;
             let mousePos = event.offsetX;
@@ -241,18 +317,5 @@ function initControl(type) {
             //Der innere Teil der soundline wird automatisch aktualisiert
             video.volume = factor;
         }
-    });
-
-    volBarWrap.addEventListener('click', function(event) {
-            //Erfasst die gesamte Breite des volBarWrap Elements und dann die Mausposition relativ zu dem Element
-            let width = volBarWrap.clientWidth;
-            let mousePos = event.offsetX;
-
-            //errechnet den Faktor der die Position des Cursors repräsentiert
-            let factor = mousePos / width;
-
-            //Setzt die neue Volume
-            //Der innere Teil der soundline wird automatisch aktualisiert
-            video.volume = factor;
     });
 }

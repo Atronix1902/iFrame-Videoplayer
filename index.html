@@ -4,9 +4,6 @@
     <head>
         <meta charset="UTF-8">
         <meta meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-        <meta http-equiv="Pragma" content="no-cache">
-        <meta http-equiv="Expires" content="10">
         
         <link id="style" rel="stylesheet" type="text/css" href="./css/main.css"></link>
         <link rel="icon" type="image/jpeg" href="./media/icon.png">
@@ -68,21 +65,20 @@
         <video preload="metadata" id="video" type="video/mp4" crossorigin="anonymous"></video>
         <script src="./js/main.js"></script>
         <script>
-            let e = document.getElementById('video');
             let dlButton = document.getElementById('download');
             dlButton.style.display = 'none';
             if(src != null) {
-                e.src = src.replaceAll('../', './');
+                video.src = src.replaceAll('../', './');
             }
             else {
-                e.src = "./media/test.mp4";
+                video.src = "./media/test.mp4";
             }
             if(dl) {
                 dlButton.style.display ='inline';
                 dlButton.setAttribute('href', e.src);
             }
-            initControl();
-            e.load();
+            initControl(type);
+            video.load();
             video.play();
         </script>
     </body>

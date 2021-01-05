@@ -58,7 +58,7 @@ function picInPic() {
     }
 }
 
-function initControl() {
+function initControl(type) {
     pause.style.display = 'none';
     volMid.style.display = 'none';
     volMin.style.display = 'none';
@@ -120,12 +120,27 @@ function initControl() {
 
     video.addEventListener('progress', function() {
         if(video.buffered.length>0) {
-            preload.style.width = 100 * video.buffered.end(0) / video.duration + "%";
+            switch(type) {        
+                default:
+                    preload.style.width = 100 * video.buffered.end(0) / video.duration + "%";
+                    break;
+                case 2:
+                    preload.style.height = 100 * video.buffered.end(0) / video.duration + "%";
+                    break;
+            }
+            console.log('Preload: ' + 100 * video.buffered.end(0) / video.duration + "%");
         }
     });
 
     video.addEventListener('timeupdate', function() {
-        played.style.width = 100 * video.currentTime / video.duration + "%";
+        switch(type) {        
+            default:
+                played.style.width = 100 * video.currentTime / video.duration + "%";
+                break;
+            case 2:
+                played.style.height = 100 * video.currentTime / video.duration + "%";
+                break;
+        }
         currentTime.innerText = Math.floor(video.currentTime/60) + ":" + sekformat.format(Math.floor(video.currentTime%60));;
     });
 
@@ -140,7 +155,15 @@ function initControl() {
     });
 
     video.addEventListener('volumechange', function() {
-        volBarInner.style.width = 100 * video.volume + "%";
+        switch(type) {        
+            default:
+                volBarInner.style.width = 100 * video.volume + "%";
+                break;
+            case 2:
+                volBarInner.style.height = 100 * video.volume + "%";
+                break;
+        }
+        
         if (video.muted || video.volume <= 0) {
             volMax.style.display = 'none';
             volMin.style.display = 'inline';

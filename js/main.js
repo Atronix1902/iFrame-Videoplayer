@@ -55,6 +55,17 @@ function exitFullscreen() {
 }
 
 /**
+ * Checks if fullscreen is enabled
+ * @author AtronixYT
+ * @returns {boolean} boolean - enabled
+ */
+function isFullscreen() {
+    h = screen.height == body.clientHeight;         //Checks if height is screen-height
+    w = screen.width == body.clientWidth;           //Checks if width is screen-width
+    return w && h;                                  //Returns if fullscreen is enabled using width and height
+}
+
+/**
  * Enables Picture in Picture mode for video element
  * @author AtronixYT
  */
@@ -105,6 +116,15 @@ function initControl(type) {
         else {                                                              //else
             video.pause();                                                  //Pauses video
         }
+    });
+
+    /**
+     * Adds eventlistener for double-click on empty-space
+     * @author AtronixYT
+     */
+    empty.addEventListener('dblclick', function() {
+        isFullscreen() ? exitFullscreen() : openFullscreen();               //If fullscreen is enabled closes it else opens it
+        console.log("Empty doubleklick");                                   //Sends information to console
     });
 
     /**

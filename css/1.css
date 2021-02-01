@@ -39,10 +39,8 @@ video {
   color: white;
   z-index: 2;
   padding: 0px;
-}
-#control-bar i {
-  position: absolute;
-  top: 0px;
+  display: flex;
+  vertical-align: middle;
 }
 #control-bar #play-pause {
   position: relative;
@@ -53,11 +51,11 @@ video {
   width: fit-content;
 }
 #control-bar #volume {
-  display: inline-block;
+  display: flex;
   position: relative;
-  left: 30px;
+  left: 10px;
   height: 100%;
-  width: 140px;
+  width: fit-content;
 }
 #control-bar #volume #volicons {
   display: inline-block;
@@ -65,21 +63,23 @@ video {
   top: 0px;
   left: 0px;
   height: 100%;
+  width: 20px;
 }
 #control-bar #volume #volbar-wrapper {
   position: relative;
   top: 0px;
-  left: 30px;
+  left: 10px;
   height: 100%;
-  width: 100px;
+  width: 0px;
   display: inline-block;
+  transition: width 1s ease-in-out;
 }
 #control-bar #volume #volbar-wrapper #volume-bar {
   display: inline-block;
   position: absolute;
   left: 0px;
   top: calc(50% - 2px);
-  width: 100px;
+  width: 100%;
   height: 4px;
   background-color: rgba(124, 124, 124, 0.5);
   border: 0px solid black;
@@ -104,14 +104,10 @@ video {
 #control-bar #screening {
   display: inline-block;
   position: absolute;
-  width: 17.5px;
+  width: fit-content;
   height: 100%;
   right: 0px;
   top: 0px;
-}
-#control-bar #screening #pip {
-  position: relative;
-  left: -30px;
 }
 #control-bar #util {
   display: inline-block;
@@ -119,7 +115,7 @@ video {
   width: 17.5px;
   height: 100%;
   top: 0px;
-  right: 60px;
+  right: 50px;
 }
 #control-bar #util a {
   color: white;

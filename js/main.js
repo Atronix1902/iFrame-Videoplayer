@@ -24,6 +24,7 @@ var compress    = document.getElementById('compress');                          
 var pip         = document.getElementById('pip');                                               //Picture in Picture button
 const pipAvail  = document.pictureInPictureEnabled || !video.disablePictureInPicture;           //If Picture in Picture is available
 var timer;                                                                                      //Timer
+var timer2;                                                                                     //Timer 2
 
 /**
  * Opens fullscreen for whole body element
@@ -135,6 +136,51 @@ function initControl(type) {
             video.muted = true;                                             //Mutes video
             console.log("Muted Video");                                     //Sends information to Console
         }
+    });
+
+    /**
+     * Adds eventlistener for mouseover of volume-icon-container
+     * @author AtronixYT
+     */
+    volIcons.addEventListener('mouseover', function() {
+        clearTimeout(timer2);
+        if(type == 2) {
+            volBarWrap.style.height = '100px';
+        } else {
+            volBarWrap.style.width = '100px';
+        }
+        console.log("volIcons Mouseover");
+    });
+
+    /**
+     * Adds eventlistener for mouseover of volume-bar-wrapper
+     * @author AtronixYT
+     */
+    volBarWrap.addEventListener('mouseover', function() {
+        clearTimeout(timer2);
+        if(type == 2) {
+            volBarWrap.style.height = '100px';
+        } else {
+            volBarWrap.style.width = '100px';
+        }
+        console.log("volBarWrap Mouseover");
+    });
+
+    /**
+     * Adds eventlistener for mouseleave of volume-container
+     * @author AtronixYT
+     */
+    volume.addEventListener('mouseleave', function() {
+        clearTimeout(timer2);
+        timer2 = setTimeout(function() {
+            console.log("test");
+            if(type == 2) {
+                volBarWrap.style.height = '0';
+            } else {
+                volBarWrap.style.width = '0';
+            }
+        }, 1000);
+        console.log("volume Mouseleave");
     });
 
     /**

@@ -374,7 +374,7 @@ function initControl(type) {
     });
 
     /**
-     * Adds eventlistener for mousemove on progress-bar-wrapper
+     * Adds eventlistener for mousemove on volume-bar-wrapper
      * @author AtronixYT
      */
     volBarWrap.addEventListener('mousemove', function(event) {
@@ -397,7 +397,7 @@ function initControl(type) {
     });
 
     /**
-     * Adds eventlistener for click on progress-bar-wrapper
+     * Adds eventlistener for click on volume-bar-wrapper
      * @author AtronixYT
      */
     volBarWrap.addEventListener('click', function(event) {

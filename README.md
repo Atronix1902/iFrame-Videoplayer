@@ -15,7 +15,7 @@ This would create a clean videoplayer:
 ```
 It's possible to use it via my website too:
 ```html
-<iframe height="900" width="1600" src="https://iframe/kriebel.ddnsfree.com/video/?src=<url to file>">
+<iframe height="900" width="1600" src="https://iframe.kriebel.ddnsfree.com/video/?src=<url to file>">
 ```
 But this option only provides support of using URL as filesource.
 
@@ -40,7 +40,7 @@ Example of full configurated player:
 ```
 
 and would create following mediaplayer:
-![https://iframe/kriebel.ddnsfree.com/video/?src=./media/test.mp4&t=1&dl=true](https://kriebel.ddnsfree.com/media/images/other/mp4_screenshot.jpg)
+![https://iframe.kriebel.ddnsfree.com/video/?src=./media/test.mp4&t=1&dl=true](https://kriebel.ddnsfree.com/media/images/other/mp4_screenshot.jpg)
 
 # Styling
 
